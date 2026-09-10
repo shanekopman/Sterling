@@ -1,0 +1,17 @@
+:root{
+  /* Subtle rounding only. Nothing bubbly; pill is reserved for badges/tags. */
+  --radius-xs:2px;
+  --radius-sm:4px;
+  --radius-md:6px;   /* buttons, inputs */
+  --radius-lg:10px;  /* cards, media */
+  --radius-xl:14px;  /* dialogs, large panels */
+  --radius-pill:999px;
+  --radius-circle:50%;
+
+  /* Hairline widths */
+  --border-w:1px;/* @kind spacing */
+  --border-w-strong:1.5px;/* @kind spacing */
+  --rule-w:1px;/* @kind spacing */
+  --focus-w:2px;/* @kind spacing */
+  --focus-offset:2px;/* @kind spacing */
+}

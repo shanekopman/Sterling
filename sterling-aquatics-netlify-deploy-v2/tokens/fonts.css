@@ -1,0 +1,6 @@
+/* Sterling Aquatics webfonts.
+   NOTE: no licensed font binaries were supplied with the brief, so the system is
+   built on Google Fonts equivalents served from the Google CDN. If Sterling
+   Aquatics licenses retail faces later, drop the .woff2 files in assets/fonts/
+   and replace these @import lines with local @font-face rules. */
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap");

@@ -1,0 +1,26 @@
+/* Element defaults. Kept intentionally thin — components carry their own styling. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);letter-spacing:var(--tracking-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4,h5{font-family:var(--font-display);color:var(--text-strong);margin:0;font-weight:var(--fw-bold);letter-spacing:var(--tracking-heading);line-height:var(--lh-heading);text-wrap:balance}
+h1{font-size:var(--fs-display-xl);line-height:var(--lh-display);letter-spacing:var(--tracking-display)}
+h2{font-size:var(--fs-display-lg);line-height:var(--lh-display);letter-spacing:var(--tracking-display)}
+h3{font-size:var(--fs-h3)}
+h4{font-size:var(--fs-h4)}
+h5{font-size:var(--fs-h5);font-weight:var(--fw-semibold)}
+p{margin:0;text-wrap:pretty}
+a{color:var(--text-link);text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--aqua-200);transition:color var(--dur-fast) var(--ease-in-out),text-decoration-color var(--dur-fast) var(--ease-in-out)}
+a:hover{color:var(--text-link-hover);text-decoration-color:currentColor}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:var(--focus-w) solid var(--border-focus);outline-offset:var(--focus-offset);border-radius:var(--radius-xs)}
+strong{font-weight:var(--fw-semibold);color:var(--text-strong)}
+small{font-size:var(--fs-caption)}
+hr{border:0;border-top:var(--rule-w) solid var(--border-hairline);margin:var(--space-8) 0}
+img,svg,video{display:block;max-width:100%}
+code,kbd{font-family:var(--font-mono);font-size:.9em}
+::selection{background:var(--aqua-200);color:var(--navy-900)}
+
+/* Utility primitives used by cards and kits */
+.sa-eyebrow{font-family:var(--font-body);font-size:var(--fs-eyebrow);font-weight:var(--fw-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--text-muted)}
+.sa-lead{font-size:var(--fs-body-lg);line-height:var(--lh-relaxed);color:var(--text-muted);max-width:var(--measure-body)}
+.sa-container{width:100%;max-width:var(--container-max);margin-inline:auto;padding-inline:var(--gutter)}
+.sa-rule{height:var(--rule-w);background:var(--border-hairline);border:0}

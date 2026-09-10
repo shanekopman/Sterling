@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sterling Aquatics — Swimming Lessons &amp; First Aid Training, Toronto</title><meta name="description" content="Personalized swimming lessons and Standard First Aid + CPR-C training for individuals, families and groups in Toronto."><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="site.css"><script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script><script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script><script src="ds-bundle.js"></script><script src="content/business.js"></script><style>html,body{height:auto}</style></head><body>
+<!-- ============================================================
+     NETLIFY FORM DETECTION — static definitions, do not remove.
+     Netlify's deploy scanner reads the generated HTML and cannot see JSX, so
+     each React form has a matching static copy here: same `name`, same field
+     names. These register the two forms in the Netlify dashboard; the visible
+     React forms in Forms.jsx are what visitors use and they POST to "/" as
+     url-encoded data. Keep the field lists in sync with Forms.jsx.
+     ============================================================ -->
+<form name="swimming-lessons-inquiry" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+<input type="hidden" name="form-name" value="swimming-lessons-inquiry">
+<input type="hidden" name="subject" value="New Swimming Lessons Inquiry">
+<input type="text" name="bot-field" tabindex="-1" autocomplete="off">
+<input type="text" name="name">
+<input type="email" name="email">
+<input type="tel" name="phone">
+<input type="text" name="participant-name">
+<input type="text" name="participant-age">
+<input type="text" name="swimming-ability">
+<input type="text" name="goals">
+<input type="text" name="lesson-format">
+<input type="text" name="preferred-days">
+<input type="text" name="preferred-location">
+<textarea name="notes"></textarea>
+</form>
+<form name="first-aid-training-inquiry" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+<input type="hidden" name="form-name" value="first-aid-training-inquiry">
+<input type="hidden" name="subject" value="New First Aid Training Inquiry">
+<input type="text" name="bot-field" tabindex="-1" autocomplete="off">
+<input type="text" name="name">
+<input type="email" name="email">
+<input type="tel" name="phone">
+<input type="text" name="course">
+<input type="text" name="inquiry-type">
+<input type="text" name="organisation">
+<input type="text" name="participants">
+<input type="text" name="preferred-location">
+<input type="text" name="preferred-dates">
+<textarea name="notes"></textarea>
+</form>
+<div id="root"></div>
+<script type="text/babel" src="SiteHeader.js"></script>
+<script type="text/babel" src="SiteFooter.js"></script>
+<script type="text/babel" src="SiteForms.js"></script>
+<script type="text/babel" src="SiteHome.js"></script>
+<script type="text/babel" src="SiteSwim.js"></script>
+<script type="text/babel" src="SiteFirstAid.js"></script>
+<script type="text/babel" src="SiteAbout.js"></script>
+<script type="text/babel">
+/* Route table.
+   Deliberately absent:
+     · Resources — deferred, see content/business.js › deferred.resources
+     · swim-instructors — deferred, see content/business.js › deferred.instructors */
+const ROUTES = {
+  home: () => window.Home,
+  swim: () => window.SwimOverview,
+  "swim-locations": () => window.SwimLocations,
+  "swim-pricing": () => window.SwimPricing,
+  "swim-booking": () => window.SwimBooking,
+  firstaid: () => window.FirstAidAbout,
+  "firstaid-individual": () => window.FirstAidIndividual,
+  "firstaid-group": () => window.FirstAidGroup,
+  "firstaid-inquiry": () => window.FirstAidInquiry,
+  about: () => window.About,
+  contact: () => window.Contact,
+  cancellation: () => window.CancellationPolicy,
+  privacy: () => window.PrivacyPolicy,
+  accessibility: () => window.Accessibility,
+};
+const NO_BAND = ["swim-booking", "firstaid-inquiry", "privacy", "accessibility", "cancellation"];
+function App(){
+  const [page,setPage]=React.useState("home");
+  const go=(id)=>{
+    if(!ROUTES[id]){console.warn("Unknown route:",id);return;}
+    setPage(id);window.scrollTo({top:0,behavior:"instant"});
+  };
+  const Screen=(ROUTES[page]||ROUTES.home)();
+  return (<div className="site">
+    <Header page={page} onNavigate={go}/>
+    <main><Screen onNavigate={go}/></main>
+    {NO_BAND.indexOf(page)===-1?<CtaBand onNavigate={go}/>:null}
+    <Footer onNavigate={go}/>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

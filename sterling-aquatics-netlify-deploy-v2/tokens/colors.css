@@ -1,0 +1,99 @@
+:root{
+  /* ---------- Base ramps ---------- */
+  /* Navy — the brand's structural colour. Deep, cool, unsaturated. */
+  --navy-950:#04101c;
+  --navy-900:#071523;
+  --navy-800:#0c1f31;
+  --navy-700:#123049;
+  --navy-600:#1a4361;
+  --navy-500:#255a7c;
+
+  /* Graphite — text and secondary structure. Slightly blue-cool grey. */
+  --graphite-900:#1d252c;
+  --graphite-800:#2b353d;
+  --graphite-700:#3c4750;
+  --graphite-600:#525e68;
+  --graphite-500:#6b7781;
+
+  /* Sterling — the silver ramp: rules, borders, muted surfaces. */
+  --sterling-400:#8d979f;
+  --sterling-300:#aab3ba;
+  --sterling-200:#c7ced3;
+  --sterling-100:#dfe4e8;
+  --sterling-50:#edf0f2;
+
+  /* Warm white — page grounds. Paper, not screen-white. */
+  --warm-white:#faf8f5;
+  --warm-white-2:#f4f1ec;
+  --paper:#ffffff;
+
+  /* Aquatic — restrained accent. Used for action, never for decoration. */
+  --aqua-700:#125a72;
+  --aqua-600:#166b86;
+  --aqua-500:#1a809d;
+  --aqua-400:#3f9db6;
+  --aqua-200:#a9cfda;
+  --aqua-100:#dceaef;
+  --aqua-50:#eef5f8;
+
+  /* Semantic hues (muted, in the same cool family) */
+  --green-600:#1f6b4d;
+  --green-100:#e0eee7;
+  --amber-600:#8a6318;
+  --amber-100:#f4ead6;
+  --red-600:#a63a30;
+  --red-100:#f6e3e0;
+
+  /* ---------- Semantic aliases ---------- */
+  --text-strong:var(--navy-900);
+  --text-body:var(--graphite-800);
+  --text-muted:var(--graphite-600);
+  --text-subtle:var(--sterling-400);
+  --text-on-dark:var(--warm-white);
+  --text-on-dark-muted:var(--sterling-300);
+  --text-on-accent:#ffffff;
+  --text-link:var(--aqua-600);
+  --text-link-hover:var(--aqua-700);
+
+  --surface-page:var(--warm-white);
+  --surface-card:var(--paper);
+  --surface-sunken:var(--warm-white-2);
+  --surface-muted:var(--sterling-50);
+  --surface-inverse:var(--navy-900);
+  --surface-inverse-2:var(--navy-800);
+  --surface-accent-soft:var(--aqua-50);
+
+  --border-hairline:var(--sterling-100);
+  --border-default:var(--sterling-200);
+  --border-strong:var(--sterling-300);
+  --border-inverse:rgba(223,228,232,.18);
+  --border-focus:var(--aqua-500);
+
+  --action-primary:var(--navy-800);
+  --action-primary-hover:var(--navy-700);
+  --action-primary-active:var(--navy-900);
+  --action-accent:var(--aqua-600);
+  --action-accent-hover:var(--aqua-700);
+  --action-quiet-hover:var(--sterling-50);
+
+  --status-success-fg:var(--green-600);
+  --status-success-bg:var(--green-100);
+  --status-warning-fg:var(--amber-600);
+  --status-warning-bg:var(--amber-100);
+  --status-danger-fg:var(--red-600);
+  --status-danger-bg:var(--red-100);
+  --status-info-fg:var(--aqua-700);
+  --status-info-bg:var(--aqua-100);
+
+  /* Service tints — Swimming Lessons / First Aid Training.
+     Differentiation by value, not hue: First Aid stays inside the brand's cool
+     palette rather than shifting to a red-and-white medical aesthetic. */
+  --pillar-swim:var(--aqua-600);
+  --pillar-firstaid:var(--navy-600);
+
+  /* Subtle water treatments: light, abstract, never literal */
+  --wash-aqua:linear-gradient(180deg,var(--aqua-50) 0%,var(--warm-white) 100%);/* @kind other */
+  --wash-navy:linear-gradient(160deg,var(--navy-800) 0%,var(--navy-950) 100%);/* @kind other */
+  --wash-sheen:linear-gradient(105deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.10) 45%,rgba(255,255,255,0) 70%);/* @kind other */
+  --scrim-photo:linear-gradient(180deg,rgba(7,21,35,0) 0%,rgba(7,21,35,.20) 45%,rgba(7,21,35,.78) 100%);/* @kind other */
+}

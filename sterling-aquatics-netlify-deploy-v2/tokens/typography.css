@@ -1,0 +1,45 @@
+:root{
+  /* Families */
+  --font-display:"Schibsted Grotesk","Helvetica Neue",Helvetica,sans-serif;/* @kind font */
+  --font-body:"Instrument Sans","Helvetica Neue",Helvetica,sans-serif;/* @kind font */
+  --font-editorial:"Newsreader",Georgia,"Times New Roman",serif;/* @kind font */ /* italic only, sparingly */
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;/* @kind font */
+
+  /* Weights */
+  --fw-regular:400;/* @kind font */
+  --fw-medium:500;/* @kind font */
+  --fw-semibold:600;/* @kind font */
+  --fw-bold:700;/* @kind font */
+
+  /* Type scale — 1.25 major third, tuned for 16px body */
+  --fs-display-xl:clamp(2.75rem,1.6rem + 3.6vw,4.5rem);/* @kind other */   /* 44 → 72 hero */
+  --fs-display-lg:clamp(2.25rem,1.5rem + 2.2vw,3.25rem);/* @kind other */  /* 36 → 52 section opener */
+  --fs-display-md:clamp(1.875rem,1.4rem + 1.3vw,2.5rem);/* @kind other */  /* 30 → 40 */
+  --fs-h3:1.5rem;/* @kind font */      /* 24 */
+  --fs-h4:1.25rem;/* @kind font */     /* 20 */
+  --fs-h5:1.0625rem;/* @kind font */   /* 17 */
+  --fs-body-lg:1.125rem;/* @kind font */  /* 18 — lead paragraphs */
+  --fs-body:1rem;/* @kind font */         /* 16 — default */
+  --fs-body-sm:0.9375rem;/* @kind font */ /* 15 — dense UI */
+  --fs-caption:0.8125rem;/* @kind font */ /* 13 */
+  --fs-eyebrow:0.75rem;/* @kind font */   /* 12 — uppercase label */
+
+  /* Line heights */
+  --lh-tight:1.06;/* @kind font */
+  --lh-display:1.14;/* @kind font */
+  --lh-heading:1.24;/* @kind font */
+  --lh-body:1.6;/* @kind font */
+  --lh-relaxed:1.72;/* @kind font */
+
+  /* Tracking — display tightens, small caps-labels open up */
+  --tracking-display:-0.022em;/* @kind font */
+  --tracking-heading:-0.012em;/* @kind font */
+  --tracking-body:0em;/* @kind font */
+  --tracking-eyebrow:0.14em;/* @kind font */
+  --tracking-mono:0.01em;/* @kind font */
+
+  /* Measure */
+  --measure-tight:34ch;/* @kind other */
+  --measure-body:62ch;/* @kind other */
+  --measure-wide:74ch;/* @kind other */
+}
