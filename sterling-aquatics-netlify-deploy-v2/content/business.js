@@ -61,29 +61,25 @@ window.SterlingContent = {
   },
 
   /* ---------------------------------------------------------------- forms */
-  /* Both inquiry forms submit to NETLIFY FORMS. Each is a separately named
-     Netlify form, registered by a matching static definition in
-     ui_kits/website/index.html (Netlify's deploy scanner cannot read JSX).
+  /* Both inquiry forms submit to WEB3FORMS, which emails each submission to
+     sterling.aquatics.ltd@gmail.com (free tier: 250 submissions/month).
 
-     Submissions are POSTed to `action` as application/x-www-form-urlencoded —
-     Netlify Forms does not accept JSON. Notification delivery is configured in
-     the Netlify dashboard, so NO credential, API key or password appears in
-     this codebase. The customer's email field is named "email" so Netlify sets
-     the notification Reply-to correctly.
+     `accessKey` is a PUBLIC key by design — it can only deliver to the address
+     it was registered with — so it is safe in client code. No password or
+     private credential appears in this codebase. To rotate it, generate a new
+     key at web3forms.com for the same address and replace it here.
 
-     The prefilled-email draft is now a FAILURE fallback only; a successful
-     submission shows the confirmation message. */
+     The prefilled-email draft is a FAILURE fallback only. */
   forms: {
-    action: "/",
-    netlifyForms: {
-      swim: { name: "swimming-lessons-inquiry", subject: "New Swimming Lessons Inquiry" },
-      firstAid: { name: "first-aid-training-inquiry", subject: "New First Aid Training Inquiry" },
+    endpoint: "https://api.web3forms.com/submit",
+    accessKey: "2facf1a5-fa86-42b5-a4b4-6da73e856fe1",
+    subjects: {
+      swim: "New Swimming Lessons Inquiry",
+      firstAid: "New First Aid Training Inquiry",
     },
-    honeypot: "bot-field",
+    honeypot: "botcheck",
     deliverTo: "sterling.aquatics.ltd@gmail.com",
-    processor: "Netlify Forms",
-    integrationNote:
-      "Both forms submit to Netlify Forms as url-encoded data. Netlify stores the submissions and emails the address configured in the Netlify dashboard; no credential lives in this codebase. If a submission fails, the visitor is offered a prefilled email to sterling.aquatics.ltd@gmail.com as a fallback.",
+    processor: "Web3Forms",
     reassurance: "No payment today",
   },
 
@@ -449,8 +445,8 @@ window.SterlingContent = {
       },
       {
         id: "pv4",
-        title: "Who processes and stores form submissions",
-        body: "This website is hosted on Netlify, and our inquiry forms use Netlify Forms. When you submit a form, Netlify processes and stores your submission on our behalf and forwards it to us by email. Netlify may also record technical details such as your IP address and the time of submission as part of its spam filtering. If we connect a booking or scheduling service in future, that provider may process the information you give it in order to arrange your session. We only use services needed to receive and respond to inquiries.",
+        title: "Who processes form submissions",
+        body: "This website is hosted on Netlify. Our inquiry forms are delivered by Web3Forms: when you submit a form, Web3Forms receives your submission and forwards it to us by email. Web3Forms may record technical details such as your IP address as part of its spam filtering. Netlify, as our host, may process standard request information such as IP addresses when you visit the site. If we connect a booking or scheduling service in future, that provider may process the information you give it in order to arrange your session. We only use services needed to receive and respond to inquiries.",
       },
       {
         id: "pv5",
