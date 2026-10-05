@@ -18,31 +18,31 @@ const Tag = __need("Tag");
 const C = window.SterlingContent;
 
 /* ---------------------------------------------------------------------------
-   Netlify Forms submission
+   Inquiry submission — Web3Forms
    ---------------------------------------------------------------------------
-   Netlify's build-time scanner cannot see JSX, so each form has a matching
-   STATIC definition in index.html (same `name`, same field names). Those static
-   copies are what register the forms in the Netlify dashboard; these React
-   forms are what the visitor actually uses.
+   Both forms POST to Web3Forms (https://web3forms.com), which emails each
+   submission to the address the access key was registered with
+   (sterling.aquatics.ltd@gmail.com). Free tier: 250 submissions/month.
 
-   Netlify Forms does NOT accept JSON. Submissions are POSTed to "/" as
-   application/x-www-form-urlencoded, and the body must include `form-name`
-   plus the honeypot field.
+   The access key lives in content/business.js › forms.accessKey. It is a
+   PUBLIC key by design — it can only deliver to its registered address — so it
+   is safe in client code. No password or private secret is in this codebase.
 
-   No secret, key or password lives in this code — Netlify routes the
-   notification to the site's configured address.
+   Sent as multipart FormData (no custom Content-Type → no CORS preflight).
+   Web3Forms uses the `email` field as the notification's Reply-to, and drops
+   any submission whose `botcheck` honeypot is filled.
 --------------------------------------------------------------------------- */
 
-const NETLIFY_FORMS = {
+const INQUIRY_FORMS = {
   swim: {
     name: "swimming-lessons-inquiry",
     subject: "New Swimming Lessons Inquiry",
-    honeypot: "bot-field",
+    honeypot: "botcheck",
   },
   firstAid: {
     name: "first-aid-training-inquiry",
     subject: "New First Aid Training Inquiry",
-    honeypot: "bot-field",
+    honeypot: "botcheck",
   },
 };
 
@@ -50,26 +50,32 @@ const SUCCESS_MESSAGE =
   "Thank you for contacting Sterling Aquatics. Your inquiry has been received, and we typically reply within 24 hours.";
 
 /**
- * POST a form to Netlify as url-encoded data. Resolves only on a successful
- * response; every other outcome throws so the caller shows the error state.
+ * POST a form to Web3Forms. Resolves only when Web3Forms confirms success;
+ * every other outcome throws so the caller shows the error state.
  */
-async function postToNetlify(formName, fields, honeypot) {
-  const body = new URLSearchParams();
-  body.append("form-name", formName);
+async function submitInquiry(formName, fields, honeypot) {
+  const body = new FormData();
+  body.append("access_key", C.forms.accessKey);
+  body.append("from_name", "Sterling Aquatics website");
+  body.append("form", formName);
   Object.entries(fields).forEach(([k, val]) => {
     if (val === undefined || val === null) return;
     const s = Array.isArray(val) ? val.join(", ") : String(val);
     if (s.trim() === "") return; // omit empty optional fields
     body.append(k, s);
   });
-  // The honeypot is always sent, empty, so Netlify sees the field it expects.
-  if (honeypot) body.append(honeypot, "");
-  const res = await fetch(C.forms.action, {
+  if (honeypot) body.append(honeypot, ""); // empty for real visitors
+  const res = await fetch(C.forms.endpoint, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-    body: body.toString(),
+    headers: { Accept: "application/json" },
+    body,
   });
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText || "submission failed"}`);
+  let data = null;
+  try { data = await res.json(); } catch (_) { /* non-JSON error page */ }
+  if (!res.ok || !data || data.success !== true) {
+    const why = (data && data.message) || `${res.status} ${res.statusText || "submission failed"}`;
+    throw new Error(why);
+  }
   return true;
 }
 
@@ -84,11 +90,10 @@ function mailtoDraft(subject, fields) {
 
 const emailValid = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 
-/** Hidden inputs every Netlify-wired form needs, plus the honeypot. */
-function NetlifyFields({ config, extra }) {
+/** Hidden context fields plus the honeypot. */
+function HiddenFields({ config, extra }) {
   return (
     <>
-      <input type="hidden" name="form-name" value={config.name} readOnly />
       <input type="hidden" name="subject" value={config.subject} readOnly />
       {Object.entries(extra || {}).map(([k, val]) => (
         <input key={k} type="hidden" name={k} value={val} readOnly />
@@ -155,10 +160,10 @@ function ErrorSummary({ errors }) {
 }
 
 /* ========================================================================
-   SWIMMING LESSONS INQUIRY  →  Netlify form "swimming-lessons-inquiry"
+   SWIMMING LESSONS INQUIRY  →  "swimming-lessons-inquiry" (Web3Forms)
    ===================================================================== */
 function SwimInquiryForm() {
-  const cfg = NETLIFY_FORMS.swim;
+  const cfg = INQUIRY_FORMS.swim;
   const [v, setV] = React.useState({
     name: "", email: "", phone: "", participant: "", age: "",
     ability: "", goals: "", notes: "",
@@ -173,7 +178,7 @@ function SwimInquiryForm() {
   const set = (k) => (e) => setV((p) => ({ ...p, [k]: e.target.value }));
   const toggleDay = (d) => setDays((p) => (p.includes(d) ? p.filter((x) => x !== d) : [...p, d]));
 
-  /* Netlify field names — these must match the static definition in index.html. */
+  /* Field names as they appear in the notification email. */
   const fields = {
     name: v.name,
     email: v.email,
@@ -205,7 +210,7 @@ function SwimInquiryForm() {
     inFlight.current = true;
     setStatus("loading");
     try {
-      await postToNetlify(cfg.name, { ...fields, subject: cfg.subject }, cfg.honeypot);
+      await submitInquiry(cfg.name, { ...fields, subject: cfg.subject }, cfg.honeypot);
       setResult({ state: "ok" });
     } catch (err) {
       setResult({
@@ -228,13 +233,11 @@ function SwimInquiryForm() {
       className="stack stack--lg"
       name={cfg.name}
       method="POST"
-      action={C.forms.action}
-      data-netlify="true"
-      netlify-honeypot={cfg.honeypot}
+      action={C.forms.endpoint}
       onSubmit={submit}
       noValidate
     >
-      <NetlifyFields
+      <HiddenFields
         config={cfg}
         extra={{
           "lesson-format": fields["lesson-format"],
@@ -301,11 +304,11 @@ function SwimInquiryForm() {
 }
 
 /* ========================================================================
-   FIRST AID INQUIRY  →  Netlify form "first-aid-training-inquiry"
+   FIRST AID INQUIRY  →  "first-aid-training-inquiry" (Web3Forms)
    One training offering, so the form never asks which course.
    ===================================================================== */
 function FirstAidInquiryForm({ defaultType = "individual" }) {
-  const cfg = NETLIFY_FORMS.firstAid;
+  const cfg = INQUIRY_FORMS.firstAid;
   const [v, setV] = React.useState({
     name: "", email: "", phone: "", org: "", participants: "",
     location: "", dates: "", notes: "",
@@ -350,7 +353,7 @@ function FirstAidInquiryForm({ defaultType = "individual" }) {
     inFlight.current = true;
     setStatus("loading");
     try {
-      await postToNetlify(cfg.name, { ...fields, subject: cfg.subject }, cfg.honeypot);
+      await submitInquiry(cfg.name, { ...fields, subject: cfg.subject }, cfg.honeypot);
       setResult({ state: "ok" });
     } catch (err) {
       setResult({
@@ -373,13 +376,11 @@ function FirstAidInquiryForm({ defaultType = "individual" }) {
       className="stack stack--lg"
       name={cfg.name}
       method="POST"
-      action={C.forms.action}
-      data-netlify="true"
-      netlify-honeypot={cfg.honeypot}
+      action={C.forms.endpoint}
       onSubmit={submit}
       noValidate
     >
-      <NetlifyFields
+      <HiddenFields
         config={cfg}
         extra={{ course: C.firstAid.courseName, "inquiry-type": fields["inquiry-type"] }}
       />
@@ -445,5 +446,5 @@ function FirstAidInquiryForm({ defaultType = "individual" }) {
 
 Object.assign(window, {
   SwimInquiryForm, FirstAidInquiryForm, ResultPanel,
-  postToNetlify, mailtoDraft, NETLIFY_FORMS, SUCCESS_MESSAGE,
+  submitInquiry, mailtoDraft, INQUIRY_FORMS, SUCCESS_MESSAGE,
 });
