@@ -86,7 +86,16 @@
 .spinner{display:inline-block;width:.9em;height:.9em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.spinner{animation-duration:1.6s}}
-.wordmark{display:flex;flex-direction:column;flex:0 0 auto;text-decoration:none}
+.wordmark{display:flex;flex-direction:row;align-items:center;gap:10px;flex:0 0 auto;text-decoration:none}
+.wordmark__mark{width:34px;height:34px;flex:0 0 auto;display:block}
+.wordmark__s{stroke:var(--navy-900)}
+.wordmark__rope{stroke:var(--aqua-500)}
+.wordmark--inverse .wordmark__s{stroke:var(--warm-white)}
+.wordmark--inverse .wordmark__rope{stroke:var(--aqua-400)}
+.wordmark--lg{gap:12px}
+.wordmark--lg .wordmark__mark{width:42px;height:42px}
+.wordmark--sm .wordmark__mark{width:28px;height:28px}
+@media (max-width:420px){.wordmark{gap:8px}.wordmark__mark{width:28px;height:28px}.wordmark__name{font-size:17px}}
 .wordmark__name{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:-.032em;color:var(--navy-900);line-height:1;white-space:nowrap}
 .wordmark--lg .wordmark__name{font-size:24px}
 .wordmark--sm .wordmark__name{font-size:17px}

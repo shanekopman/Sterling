@@ -13,7 +13,9 @@ const SectionHeading = __need("SectionHeading");
 const C = window.SterlingContent;
 
 /**
- * Interim wordmark — the brand name in live type. Name only, everywhere.
+ * Logo — the 1a "Lane turn" mark (an S traced like a swimmer's path down a
+ * lane and back, aqua lane rope across the middle) beside the brand name.
+ * Drawn inline so it inherits colour for the light header and navy footer.
  * There is no tagline lockup: "Swim. Rescue. Respond." was retired because
  * Rescue is no longer a Sterling Aquatics service. Where a unifying statement
  * is needed, use the brand message from content/business.js › brand.message.
@@ -27,6 +29,10 @@ function Wordmark({ inverse = false, size = "md", onClick }) {
       aria-label={C.brand.name}
       onClick={(e) => { e.preventDefault(); onClick?.(); }}
     >
+      <svg className="wordmark__mark" viewBox="14 14 72 72" aria-hidden="true" focusable="false">
+        <path className="wordmark__s" d="M72 22H38a14 14 0 0 0 0 28h24a14 14 0 0 1 0 28H28" fill="none" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+        <path className="wordmark__rope" d="M40 50h20" fill="none" strokeWidth="12" strokeLinecap="round" />
+      </svg>
       <span className="wordmark__name">{C.brand.name}</span>
     </a>
   );
