@@ -198,6 +198,62 @@ window.SterlingContent = {
     ],
   },
 
+  /* ---------------------------------------------------------- instructors */
+  /* Published on the home page. Bio adapted from the instructor's existing
+     profile; no credentials are listed beyond what the bio itself states. */
+  instructors: {
+    eyebrow: "Our Instructors",
+    title: "Who you'll swim with",
+    lead: "Book directly with your instructor's online calendar.",
+    list: [
+      {
+        id: "ethan",
+        name: "Ethan",
+        area: "Downtown Toronto",
+        intersection: "Yonge and Bloor",
+        bio: "Ethan is a certified lifeguard and long-time swimming instructor with a lifetime spent around the water and in the classroom. Ethan has taught swimmers from infants to older adults, including people with special needs and disabilities. Lessons are engaging, easy to follow, and paced to match how quickly you want to progress.",
+        teaches: ["Private lessons", "Semi-private lessons", "All ages"],
+        bookingUrl: "https://calendly.com/ethan-gtaswimschool",
+        bookingLabel: "Book with Ethan",
+        photo: {
+          src: "assets/photography/instructor-ethan.jpg",
+          alt: "Portrait of Ethan, swimming instructor.",
+          position: "50% 30%",
+        },
+      },
+      {
+        id: "shane",
+        name: "Shane",
+        area: "Midtown Toronto",
+        intersection: "Yonge and Eglinton",
+        bio: "Shane is a certified aquatic instructor and former competitive swimmer who has taught swimming since 2012 through Red Cross and Lifesaving Society programs. Shane built that experience with Zodiac Swim School at Toronto French School and Havergal College, and has run private lessons for everyone from infants to adults. While studying at Western University, Shane also taught swimmers with physical and cognitive disabilities.",
+        teaches: ["Private lessons", "Semi-private lessons", "All ages"],
+        bookingUrl: "https://calendly.com/gtaswimschool",
+        bookingLabel: "Book with Shane",
+        photo: {
+          src: "assets/photography/instructor-shane.jpg",
+          alt: "Portrait of Shane, swimming instructor.",
+          position: "50% 35%",
+        },
+      },
+      {
+        id: "damya",
+        name: "Damya",
+        area: "North York",
+        intersection: "Yonge and Sheppard",
+        bio: "Damya is a certified swim instructor and former competitive swimmer with lifelong experience in the water. Damya has taught swimmers of all ages and levels through British Swim School Toronto and in private lessons across the city. Lessons are patient, supportive and tailored to each swimmer, with a focus on strong fundamentals, water safety and proper technique — for beginners and for swimmers looking to improve their strokes alike.",
+        teaches: ["Private lessons", "Semi-private lessons", "All ages"],
+        bookingUrl: "https://calendly.com/damya-gtaswimschool/",
+        bookingLabel: "Book with Damya",
+        photo: {
+          src: "assets/photography/instructor-damya.jpg",
+          alt: "Portrait of Damya, swimming instructor.",
+          position: "50% 30%",
+        },
+      },
+    ],
+  },
+
   /* --------------------------------------------------- FIRST AID TRAINING */
   firstAid: {
     courseName: "Standard First Aid + CPR-C",
