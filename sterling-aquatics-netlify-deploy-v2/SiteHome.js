@@ -12,6 +12,7 @@ const MediaFrame = __need("MediaFrame");
 const SectionHeading = __need("SectionHeading");
 const Accordion = __need("Accordion");
 const Icon = __need("Icon");
+const Badge = __need("Badge");
 const C = window.SterlingContent;
 
 /** Two services, equal weight. Swimming Lessons first. */
@@ -102,6 +103,36 @@ function Home({ onNavigate }) {
             <Button variant="secondary" onClick={() => onNavigate("swim-locations")}>Location</Button>
             <Button variant="secondary" onClick={() => onNavigate("swim-pricing")}>Pricing</Button>
             <Button variant="link" onClick={() => onNavigate("swim-booking")}>Submit an inquiry</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Instructors */}
+      <section className="sec sec--tight">
+        <div className="wrap">
+          <div className="sec__head">
+            <SectionHeading eyebrow={C.instructors.eyebrow} title={C.instructors.title} lead={C.instructors.lead} size="sm" />
+          </div>
+          <div className="instructors">
+            {C.instructors.list.map((p) => (
+              <div className="instructor" key={p.id}>
+                <div className="instructor__photo">
+                  <img src={p.photo.src} alt={p.photo.alt} loading="lazy" decoding="async" style={{ objectPosition: p.photo.position }} />
+                </div>
+                <div className="instructor__body">
+                  <span className="pillar__eyebrow"><Icon name="map-pin" size={16} /> {p.area} · {p.intersection}</span>
+                  <h3 className="sa-card__title">{p.name}</h3>
+                  <p className="sa-card__text">{p.bio}</p>
+                  <div className="row" style={{ gap: "var(--space-2)" }}>
+                    {p.teaches.map((t) => <Badge key={t} tone="outline">{t}</Badge>)}
+                  </div>
+                  <div className="row" style={{ gap: "var(--space-3)", marginTop: "var(--space-2)" }}>
+                    <Button variant="accent" href={p.bookingUrl} target="_blank" rel="noopener noreferrer" iconRight={<Icon name="calendar-check" size={16} />}>{p.bookingLabel}</Button>
+                    <Button variant="link" onClick={() => onNavigate("swim-pricing")}>See pricing</Button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
